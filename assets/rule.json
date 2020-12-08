@@ -1,0 +1,129 @@
+{
+  "basic_events": [
+    "skud"
+  ],
+  "body": {
+    "actions": [
+      {
+        "event_type": "fact",
+        "name": "assign"
+      }
+    ],
+    "expression": [
+      {
+        "action": "in",
+        "left": {
+          "dtype": "string",
+          "value": "ok"
+        },
+        "operator": "&&",
+        "right": {
+          "dtype": "list:string",
+          "event": "skud",
+          "field": "object_array.list.#.status"
+        }
+      },
+      {
+        "action": "<",
+        "left": {
+          "dtype": "int",
+          "value": "3"
+        },
+        "operator": "&&",
+        "right": {
+          "dtype": "int",
+          "event": "skud",
+          "field": "num.value.all"
+        }
+      },
+      {
+        "action": "in",
+        "left": {
+          "dtype": "int",
+          "value": "1"
+        },
+        "operator": "&&",
+        "right": {
+          "dtype": "list:int",
+          "event": "skud",
+          "field": "statuses.#.status_id"
+        }
+      },
+      {
+        "action": "==",
+        "group": true,
+        "left": {
+          "dtype": "int",
+          "event": "skud",
+          "field": "id.value"
+        },
+        "operator": "||",
+        "right": {
+          "dtype": "int",
+          "event": "skud",
+          "field": "num.value.all"
+        }
+      },
+      {
+        "action": "==",
+        "group": false,
+        "left": {
+          "dtype": "string",
+          "event": "skud",
+          "field": "access_level"
+        },
+        "operator": "&&",
+        "right": {
+          "dtype": "string",
+          "value": "high"
+        }
+      },
+      {
+        "action": "==",
+        "group": false,
+        "left": {
+          "event": "skud",
+          "dtype": "int",
+          "field": "num.value.all"
+        },
+        "operator": "&&",
+        "right": {
+          "dtype": "int",
+          "value": "15"
+        }
+      },
+      {
+        "action": "==",
+        "group": false,
+        "left": {
+          "dtype": "int",
+          "value": "5"
+        },
+        "right": {
+          "dtype": "int",
+          "value": "5"
+        }
+      }
+    ]
+  },
+  "created_date": "239784",
+  "creator": "ivanov",
+  "description": "",
+  "exit_points": {
+    "is_every_condition": true,
+    "points": [
+      {
+        "token": "come_out_of_lab",
+        "type": "re_event"
+      }
+    ]
+  },
+  "id": "123",
+  "initiator": "earth",
+  "key_field": "username",
+  "modification_date": "43574576",
+  "name": "come_in_to_lab",
+  "status": "processing",
+  "type": "simple",
+  "weight": 6
+}
