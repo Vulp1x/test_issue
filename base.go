@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strings"
 )
 
 type Rule struct {
@@ -55,10 +56,18 @@ func (r *Rule) FulfillOperandsFields(exampleSourceFileName string) error {
 // CreateEvaluationString prepares string for following evaluation.
 func (r Rule) CreateEvaluationString() (
 	evaluateString string,
-	parameters map[string]interface{},
 	err error,
 ) {
-	return "(\"ok\" == \"ok\" || \"ok\" == \"ok\" || \"ok\" == \"ok\") && (1 == 4 || 1 == 3 || 1 == 1) &&" +
-			" (15 == 15 || \"high\" == \"high\") && 15 == 15 && 5 == 5 ",
-		nil, nil
+	buf := strings.Builder{}
+
+	for _, exp := range r.Body.Expressions {
+		stringExp, err := exp.toString()
+		if err != nil {
+			return "", fmt.Errorf("failed to prepare string for expression: %v", err)
+		}
+
+		buf.WriteString(stringExp)
+	}
+
+	return buf.String(), nil
 }

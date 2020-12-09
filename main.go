@@ -7,14 +7,6 @@ import (
 )
 
 func main() {
-	// примерный план работы программы:
-	// 1. Считать данные из rule.json
-	// 2.
-	//
-	//
-	//
-
-	// Считываем данные из rules.json
 	rule, err := readRule("assets/rule.json")
 	if err != nil {
 		fmt.Println(err)
@@ -27,23 +19,19 @@ func main() {
 		return
 	}
 
-	functions := map[string]govaluate.ExpressionFunction{
-		"in": in,
-	}
-
-	evalString, params, err := rule.CreateEvaluationString()
+	evalString, err := rule.CreateEvaluationString()
 	if err != nil {
 		fmt.Printf("failed to create evaluation string: %v\n", err)
 	}
 
-	exp, err := govaluate.NewEvaluableExpressionWithFunctions(evalString, functions)
+	exp, err := govaluate.NewEvaluableExpression(evalString)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	var result interface{}
-	result, err = exp.Evaluate(params)
+	result, err = exp.Evaluate(nil)
 	if err != nil {
 		fmt.Printf("failed to evaluate string: %v\n", err)
 		return
